@@ -1,20 +1,36 @@
 public class Polynomial {
-    double[] coef = new double[];
+    double[] coef;
     
-    public void Polynomial() {
-        coef = {0};
+    public Polynomial() {
+        double[] help = {0};
+        coef = help;
     }    
     
-    public void Polynomial(double[] input) {
-        for(int i = 0; i < input.length; i++){
-            this.coef[i] = input[i];
-        }
+    public Polynomial(double[] input) {
+        coef = input;
     }
     
     public Polynomial add(Polynomial input) {
-        Polynoimal result = Polynomial();
-        for(int i = 0; i < max(input.length, this.coef.length); i++){
-            result[i] = input[i] + this.coef[i];
+        Polynomial result;
+        int len = 0;
+        double s = 0;
+        if (input.coef.length <= this.coef.length){
+            len = this.coef.length;
+            result = this;
+        }
+        else{
+            len = input.coef.length;
+            result = input;
+        }
+        for(int i = 0; i < len; i++){
+            if (i < this.coef.length && i < input.coef.length){
+                s = input.coef[i] + this.coef[i];
+                result.coef[i] = s;
+            }
+            else if (i >= input.coef.length){
+                result.coef[i] = this.coef[i];
+            }
+            else result.coef[i] = input.coef[i];
         }
         return result;
     }
@@ -22,12 +38,12 @@ public class Polynomial {
     public double evaluate(double x) {
         double result = 0;
         for (int i = 0; i < this.coef.length; i++) {
-            result = result + this.coef[i]*(x^i);
+            result = result + this.coef[i]* Math.pow(x, i);
         }
         return result;
     }
     
     public boolean hasRoot(double input) {
-        return evaluate(input) = 0;
+        return evaluate(input) == 0;
     }
 }
